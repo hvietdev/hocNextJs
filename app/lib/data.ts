@@ -15,13 +15,13 @@ export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
-
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    
+    console.log('Fetching revenue data...');
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 2 seconds.');
 
     return data;
   } catch (error) {
@@ -32,6 +32,8 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
+    console.log('Fetching Latest invoices data...');
+    // await new Promise((resolve) => setTimeout(resolve, 4000));
     const data = await sql<LatestInvoiceRaw[]>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -43,6 +45,7 @@ export async function fetchLatestInvoices() {
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
+    console.log('Data fetch completed after 4 seconds...');
     return latestInvoices;
   } catch (error) {
     console.error('Database Error:', error);
@@ -58,9 +61,9 @@ export async function fetchCardData() {
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM invoices`;
+      SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+      SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+      FROM invoices`;
 
     const data = await Promise.all([
       invoiceCountPromise,

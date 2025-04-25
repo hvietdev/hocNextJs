@@ -64,7 +64,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
     `;
   } catch (error) {
     console.log("error:", error);
-
     // If a database error occurs, return a more specific error.
     return {
       message: "Database Error: Failed to Create Invoice.",
@@ -73,7 +72,9 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
   // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  return {
+    message: "success",
+  };
 }
 
 export async function updateInvoice( id: string, prevState: State, formData: FormData) {
@@ -93,10 +94,7 @@ export async function updateInvoice( id: string, prevState: State, formData: For
    // Prepare data for insertion into the database
    const { customerId, amount, status } = validatedFields.data;
   const date = new Date().toISOString().split("T")[0];
-
   const amountInCents = amount * 100;
-
-  console.log("date:", date);
 
   try {
     await sql`

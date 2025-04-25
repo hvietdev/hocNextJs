@@ -7,6 +7,8 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
 import { Metadata } from 'next';
+
+import { AddDialog } from '@/app/ui/invoices/dialog/add-dialog';
  
 export const metadata: Metadata = {
   title: 'Invoices | Acme Dashboard',
@@ -29,7 +31,7 @@ export default async function Page(props: {
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search invoices..." />
-        <CreateInvoice />
+        <AddDialog id="" />
       </div>
        <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />

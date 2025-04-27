@@ -20,10 +20,9 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
   };
   const [state, formAction] = useActionState(createInvoice, initialState);
 
-
-  if(state.message ==="success"){
-    document.getElementById("btn-close")?.click();
-  }
+  // if(state.message ==="success"){
+  //   document.getElementById("btn-close")?.click();
+  // }
 
   return (
     <form action={formAction}>

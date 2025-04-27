@@ -9,6 +9,7 @@ import { fetchInvoicesPages } from '@/app/lib/data';
 import { Metadata } from 'next';
 
 import { AddDialog } from '@/app/ui/invoices/dialog/add-dialog';
+import { LoadingSpinner } from '@/app/ui/common/loadingSpinner';
  
 export const metadata: Metadata = {
   title: 'Invoices | Acme Dashboard',
@@ -26,6 +27,7 @@ export default async function Page(props: {
   const totalPages = await fetchInvoicesPages(query);  
   return (
     <div className="w-full">
+      <LoadingSpinner />
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
       </div>

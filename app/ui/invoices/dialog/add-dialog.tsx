@@ -17,9 +17,6 @@ import { DialogClose } from "@radix-ui/react-dialog";
 
 export async function AddDialog({ id }: { id: String }) {
    const customers = await fetchCustomers();
-
-   console.log("id:", id);
-
    return (
       <Dialog>
          <DialogTrigger asChild>

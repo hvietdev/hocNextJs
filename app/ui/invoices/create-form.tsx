@@ -2,6 +2,7 @@
 
 import { CustomerField } from '@/app/lib/definitions';
 import { createInvoice, State } from '@/app/lib/actions';
+import { toast } from "sonner"
 // import Link from 'next/link';
 import { useActionState } from 'react';
 import {
@@ -11,7 +12,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from "@/components/ui/button"
-import { DialogClose } from '@radix-ui/react-dialog';
+import { SubmitButton } from '../common/submitButton';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = {
@@ -19,10 +20,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
     errors: {}
   };
   const [state, formAction] = useActionState(createInvoice, initialState);
-
-  // if(state.message ==="success"){
-  //   document.getElementById("btn-close")?.click();
-  // }
 
   return (
     <form action={formAction}>
@@ -143,7 +140,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         )}
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Button type="submit">Create Invoice</Button>
+        <SubmitButton />
       </div>
     </form>
   );

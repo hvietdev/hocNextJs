@@ -3,6 +3,7 @@ import {
    Dialog,
    DialogContent,
    DialogDescription,
+   DialogFooter,
    // DialogFooter,
    DialogHeader,
    DialogTitle,
@@ -12,12 +13,13 @@ import {
 // import { Label } from "@/components/ui/label"
 import Form from "../create-form"
 import { fetchCustomers } from "@/app/lib/data"
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export async function AddDialog({ id }: { id: String }) {
    const customers = await fetchCustomers();
 
    console.log("id:", id);
-   
+
    return (
       <Dialog>
          <DialogTrigger asChild>
@@ -42,10 +44,17 @@ export async function AddDialog({ id }: { id: String }) {
                      </DialogHeader>
                   )
             }
-   
+
             <div className="grid gap-4">
                <Form customers={customers} />
             </div>
+            <DialogFooter className="sm:justify-start">
+               <DialogClose asChild>
+                  <Button type="button" variant="secondary">
+                     Close
+                  </Button>
+               </DialogClose>
+            </DialogFooter>
          </DialogContent>
       </Dialog>
    )

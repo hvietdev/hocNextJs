@@ -14,9 +14,9 @@ import { Button } from "@/components/ui/button"
 import { DialogClose } from '@radix-ui/react-dialog';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialState: State = { 
-    message: null, 
-    errors: {} 
+  const initialState: State = {
+    message: null,
+    errors: {}
   };
   const [state, formAction] = useActionState(createInvoice, initialState);
 
@@ -143,11 +143,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         )}
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <DialogClose asChild id="btn-close">
-          <Button type="button" variant="secondary">
-            Close
-          </Button>
-        </DialogClose>
         <Button type="submit">Create Invoice</Button>
       </div>
     </form>

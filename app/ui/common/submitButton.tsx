@@ -1,15 +1,8 @@
 import { useFormStatus } from "react-dom";
 import { LoadingSpinner } from "./loadingSpinner";
-import { toast } from "sonner";
 
 export function SubmitButton() {
    const { pending } = useFormStatus();
-   if(!pending){
-      toast("Event has been created", {
-         description: "Sunday, December 03, 2023 at 9:00 AM",
-       })
-   }
-
    return (
       <button
          type="submit"

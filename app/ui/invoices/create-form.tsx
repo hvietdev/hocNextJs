@@ -2,24 +2,33 @@
 
 import { CustomerField } from '@/app/lib/definitions';
 import { createInvoice, State } from '@/app/lib/actions';
-import { toast } from "sonner"
 // import Link from 'next/link';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { SubmitButton } from '../common/submitButton';
+import { toast } from 'sonner';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function FormCreate({ customers }: { customers: CustomerField[] }) {
   const initialState: State = {
+    success: false,
     message: null,
     errors: {}
   };
   const [state, formAction] = useActionState(createInvoice, initialState);
+
+  useEffect(()=>{
+    if(state.success){
+      toast.success("Invoice has been created.")
+    } else if(!state.success && state.message) {
+      toast.error(`${state.message}`)
+    }
+  }, [state]);
 
   return (
     <form action={formAction}>
@@ -133,7 +142,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
         </fieldset>
-        {state?.message && (
+        { !state.success && state?.message && (
           <p className="mt-2 text-sm text-red-500">
             {state?.message}
           </p>

@@ -33,9 +33,12 @@ export type State = {
     status?: string[];
   };
   message?: string | null;
+  success?: boolean | null;
 };
 
 export async function createInvoice(prevState: State, formData: FormData) {
+  console.log("prevState:", prevState);
+  
   // Validate form using Zod=> return validatedFields.data
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get("customerId"),
@@ -46,6 +49,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
+      success: validatedFields.success,
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to Create Invoice.",
     };
@@ -63,17 +67,18 @@ export async function createInvoice(prevState: State, formData: FormData) {
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
-    console.log("error:", error);
-    // If a database error occurs, return a more specific error.
+    console.log("Error:", error);
+    // If a database error occurs, return a more specific error.    
     return {
-      message: "Database Error: Failed to Create Invoice.",
+      success: false, 
+      message: 'Error to Create Invoice!' 
     };
   }
-
   // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath("/dashboard/invoices");
   return {
-    message: "success",
+    success: true, 
+    message: 'Success to Create Invoice!' 
   };
 }
 
